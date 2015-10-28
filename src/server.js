@@ -22,8 +22,11 @@ var databaseURI = global.config.app.db_uri;
 
 mongoose.connect(databaseURI, function(err) {
   if (err) {
+    console.log("Cannot connect to database");
     console.error(databaseURI + ' connection error. ', err);
-    throw(err);
+    console.error("Server could not start properly");
+    //throw(err);
+
   } else /*if(process.env.NODE_ENV === 'development')*/{
     console.log(databaseURI + ' connected.');
   }
