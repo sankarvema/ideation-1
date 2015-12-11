@@ -14,7 +14,7 @@ body {
   position: fixed;
   bottom: 0;
   width: 100%;
-  /* Set the fixed height of the footer here */
+  /* Set the fixed height of thenav footer here */
   height: 50px;
   background-color: #ecf2f9;
 }
@@ -48,7 +48,7 @@ code {
   list-style: none;
   border-bottom: 0.1em solid black;
   margin-bottom: 2em;
-  padding: 0 0 1.5em;
+  padding: 0 0 2.5em;
 
 }
 
