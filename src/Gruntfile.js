@@ -1,136 +1,162 @@
 module.exports = function(grunt){
-  var paths = {
-    server: {
-      js: ['server/**/*.js', 'server.js', '!server/**/tests/*.js'],
-      templates: ['server/**/*.ejs'],
-      tests: ['server/**/tests/*.js']
+  var paths =  {
+    campaign:{
+      html:[
+        'public/app/campaign/*.html'
+      ],
+      js:[
+        'server/campaign/*.js',
+        'server.js',
+        'public/app/campaign/*.js',
+        'public/app/app.js'
+      ],
+      templates:[
+        'server/shared/campaign.ejs'
+      ]
     },
-
-    client: {
-      js: ['public/app/{,*/}*.js', '!public/app/**/tests/*.js'],
-      templates: ['public/app/**/*.html'],
-      tests: ['public/app/**/tests/*.js']
+    user:{
+      html:[
+        'public/app/admin/*.html'
+      ],
+      js:[
+        'server/user/*.js',
+        'server.js',
+        'public/app/admin/*.js',
+        'public/app/app.js'
+      ],
+      templates:[
+        'server/shared/user.ejs'
+      ]
     }
-  };
-
-  grunt.config.init({
-    jshint: {
-      options: {
-        jshintrc: true
+  }  ;
+grunt.initConfig(  {
+     
+    //JS linting 
+    jshint:{
+      campaignjs:{
+        src:paths.campaign.js
       },
-      client: {
-        src: paths.client.js,
+      campaignejs:{
+        src:paths.campaign.ejs
       },
-      server: {
-        src: paths.server.js
+      userjs:{
+        src:paths.user.js
       },
-      serverTests: {
-        src: paths.server.tests
+      userejs:{
+        src:paths.user.ejs
       },
-      clientTests: {
-        src: paths.client.tests
+      main:{
+        src:'public/app/main/mainModule.js'
       }
     },
 
-    nodemon: {
-      options: {
-        watch: paths.server.js.concat(paths.server.templates),
-        callback: function (nodemon) {
-          nodemon.on('log', function (event) {
-            console.log(event.colour);
-          });
-
-          nodemon.on('restart', function () {
-            require('fs').writeFileSync('.rebooted', 'rebooted');
-          });
-        }
+    //concatinating files
+    concat:{
+      options:{
+        separator:';'
       },
-      dev: {
-        script: './bin/www'
-      },
-    },
-
-    watch: {
-      code: {
-        options: {
-          livereload: true,
-          spawn: false
+      buid:{
+        //campaign js and html concatination
+      campaignhtml:{
+          src:paths.campaign.html,
+          dest:'dist/campaign/campaign.html'
         },
-        files: paths.client.js.concat(['.rebooted']),
-        tasks: ['lint'],
-      },
-      tests: {
-        options: {
-          spawn: true // needed for mocha tests
+        campaignjs:{
+          src:paths.campaign.js,
+          dest:'dist/campaign/campaign.js'
         },
-        files: paths.server.tests,
-        tasks: ['lint', 'test'],
-      }
-    },
-
-    concurrent: {
-      options: {
-        logConcurrentOutput: true
-      },
-      dev: ['nodemon', 'watch:code'],
-      test: ['nodemon', ]
-    },
-
-    mochaTest: {
-      options: {
-        reporter: 'spec',
-        require: 'server.js'
-      },
-      src: paths.server.tests
-    },
-
-    env: {
-      test: {
-        NODE_ENV: 'test'
-      },
-      dev: {
-        NODE_ENV: 'development'
-      }
-    },
-
-    shell: {
-      mongo: {
-        command: "sh ./bin/startMongoIfNotRunning.sh",
-        options: {
-          async: true
+        //user js and html concatination
+      userhtml:{
+          src:paths.user.html,
+          dest:'dist/user/user.html'
+        },
+        userjs:{
+          src:paths.user.js,
+          dest:'dist/user/user.js'
+        },
+        //css
+      css:{
+          src:'public/app/assets/styles/*.css',
+          dest:'dist/css/ideation.css'
+        },
+        //main html
+       main:{
+          src:'public/app/main/*.html',
+          dest:'dist/main/main.html'
         }
-      },
-    },
-
-    karma: {
-      unit: {
-        configFile: 'karma.conf.js',
-        singleRun: true
       }
     },
 
-    protractor: {
-      e2e: {
-        configFile: "protractor.conf.js"
+    //js files minification
+    uglify:{
+      campaignjs:{
+        src:'dist/campaign/campaign.js',
+        dest:'dist/campaign/campaign.js'
       },
+      userjs:{
+        src:'dist/user/user.js',
+        dest:'dist/user/user.js'
+      },
+      mainjs:{
+        src:'public/app/main/mainModule.js',
+        dest:'dist/main/mainModule.js'
+      }
     },
-  });
 
-  // contrib tasks
-  grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-nodemon');
-  grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-concurrent');
-  grunt.loadNpmTasks('grunt-mocha-test');
-  grunt.loadNpmTasks('grunt-env');
-  grunt.loadNpmTasks('grunt-shell-spawn');
-  grunt.loadNpmTasks('grunt-karma');
-  grunt.loadNpmTasks('grunt-protractor-runner');
 
-  // Grunt tasks
-  grunt.registerTask('default', ['shell:mongo', 'lint', 'test', 'env:dev', 'concurrent']);
-  grunt.registerTask('lint', ['jshint']);
-  grunt.registerTask('e2e', ['env:test', 'nodemon', 'protractor:e2e']);
-  grunt.registerTask('test', ['shell:mongo', 'env:test', 'mochaTest', 'karma:unit', 'e2e']);
-  grunt.registerTask('wtest', [/*'test',*/ 'watch:tests']);
-}
+    //html files minification
+    htmlmin:{
+      options:{ 
+        removeComments:true,
+        collapseWhitespace:true
+      },
+      campaignhtml:{
+        src:'dist/campaign/campaign.html',
+        dest:'dist/campaign/campaign.html'
+      },
+      userhtml:{
+        src:'dist/user/user.html',
+        dest:'dist/user/user.html'
+      },
+      mainhtml:{
+        src:'dist/main/main.html',
+        dest:'dist/main/main.html'
+      }
+    },
+
+    //css minification
+    cssmin:{
+      options:{
+        shorthandCompacting:false,
+        roundingPrecision:-1
+      },
+      css:{
+        src:'dist/css/ideation.css',
+        dest:'dist/css/ideation.css'
+      }
+    }
+
+  }  );  //initconfig closed
+
+
+//Loading of tasks 
+grunt.loadNpmTasks('grunt-contrib-jshint');
+grunt.loadNpmTasks('grunt-contrib-uglify');
+grunt.loadNpmTasks('grunt-contrib-concat');
+grunt.loadNpmTasks('grunt-contrib-htmlmin');
+grunt.loadNpmTasks('grunt-contrib-cssmin');
+
+
+//registering tasks
+grunt.registerTask('lint',
+  [
+    'jshint'
+  ]  );
+grunt.registerTask('default',
+  [
+    'concat',
+    'uglify',
+    'htmlmin',
+    'cssmin'
+  ]  );
+};
