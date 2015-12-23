@@ -29,6 +29,8 @@ module.exports = function(grunt){
       ]
     }
   }  ;
+
+  //initconfig Method defining Tasks 
 grunt.initConfig(  {
      
     //JS linting 
@@ -53,9 +55,10 @@ grunt.initConfig(  {
     //concatinating files
     concat:{
       options:{
-        separator:';'
-      },
-      buid:{
+        separator:';',   
+        dest: 'build/'   // Destination path prefix.
+        },
+      
         //campaign js and html concatination
       campaignhtml:{
           src:paths.campaign.html,
@@ -83,8 +86,8 @@ grunt.initConfig(  {
        main:{
           src:'public/app/main/*.html',
           dest:'dist/main/main.html'
-        }
-      }
+        },
+      
     },
 
     //js files minification
