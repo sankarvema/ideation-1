@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('ideation.admin')
+angular.module('myapp.admin')
   .controller('groupControllerMain', ['$scope', function ($scope) {
 
   }]);

@@ -34,7 +34,7 @@ router.get('/login', function(req, res) {
 });*/
 
 router.get('/admin', function(req, res) {
-  res.render('admin', { title: 'Admin Area - Main Page' });
+  res.render('admin', { title: 'Administration Module - Main Page' });
 });
 
 router.get('/cvm', function(req, res) {

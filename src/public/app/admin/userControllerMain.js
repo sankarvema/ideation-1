@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('ideation.admin')
+angular.module('myapp.admin')
   .controller('userControllerMain', ['$scope', '$http', 'growl', function ($scope, $http, growl) {
 
     $scope.hideFilter = true;

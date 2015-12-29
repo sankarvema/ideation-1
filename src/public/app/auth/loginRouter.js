@@ -28,7 +28,7 @@ app.config(['$routeProvider', function ($routeProvider) {
 
   }]);
 
-app.run(function($rootScope, $location, loginService){
+/*app.run(function($rootScope, $location, loginService){
     var publicRoutes = ['/login', '/register', '/forgotPassword']; // list of public routes
     console.log('Event fired:: app run');
 
@@ -39,4 +39,4 @@ app.run(function($rootScope, $location, loginService){
         $location.path('login');
       }
     });
-  });
+  });*/

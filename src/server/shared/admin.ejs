@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en" ng-app="myapp.admin">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>Ideation Dashboard</title>
+  <!-- STYLES -->
+  <!-- build:css lib/css/main.min.css -->
+  <link rel="stylesheet" type="text/css" href="/app/bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="/app/bower_components/font-awesome/css/font-awesome.min.css">
+  <!-- endbuild -->
+  <!-- SCRIPTS -->
+  <!-- build:js lib/js/main.min.js -->
+<%- include partials/include-std %>
+  <!-- endbuild -->
+  <!-- Custom Scripts -->
+<script type="text/javascript" src="/app/admin/adminModule.js"></script>
+<script type="text/javascript" src="/app/admin/userControllerMain.js"></script>
+<script type="text/javascript" src="/app/admin/groupControllerMain.js"></script>
+<script type="text/javascript" src="/app/admin/adminRouter.js"></script>
+
+
+  <link rel="stylesheet" href="/app/assets/styles/main.css" />
+</head>
+
+<body>
+  <div class="container">
+    <!-- Fixed navbar :: Start-->
+    <nav class="navbar navbar-default navbar-fixed-top">
+      
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">CVM</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <div ng-include="'/app/partial/menu.html'"></div>
+        </div> --><!--/.nav-collapse -->
+      
+    </nav>
+    <!-- Fixed navbar :: End-->
+
+    <!-- application notification area, required for angular-growl-2-->
+    <div growl></div>
+
+    <!-- Main Content -->
+    <div ui-view></div>
+
+    <!-- Page footer :: Start -->
+    <footer class="footer">
+      <div class="container">
+        <p class="text-muted">&copy; All rights reserved 2015. Angular seed app: v<span app-version></span></p>
+      </div>
+    </footer>
+  </div>
+
+</body>
+</html>
