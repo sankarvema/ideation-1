@@ -1,0 +1,5 @@
+{
+    "connectionString": "localhost:27017/cvm-db",
+    "apiUrl":  "http://localhost:3010/api",
+    "secret": "sans"
+}

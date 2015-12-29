@@ -4,13 +4,13 @@ var express = require('express');
 var router = express.Router();
 
 // Routes for the home page -- begin
-router.get('/', function(req, res) {
+/*router.get('/', function(req, res) {
   res.render('index', { title: 'Ideation Portal' });
 });
 
 router.post('/', function(req, res) {
   res.render('index', { title: 'Ideation Portal' });
-});
+});*/
 // routes for the home page -- end
 
 /*router.get('/todo', function(req, res) {
@@ -33,6 +33,10 @@ router.get('/login', function(req, res) {
   res.render('login', { title: 'Ideation Portal - Security' });
 });*/
 
+router.get('/admin', function(req, res) {
+  res.render('admin', { title: 'Admin Area - Main Page' });
+});
+
 router.get('/cvm', function(req, res) {
   res.render('cvm', { title: 'Customer Visit Portal - Main Page' });
 });
@@ -41,5 +45,13 @@ router.get('/cvm', function(req, res) {
 router.get('/dashboard', function(req, res) {
   res.render('dashboard', { title: 'Ideation Portal - Dashboard' });
 });
+
+/*router.get('/register', function(req, res) {
+  res.render('register', { title: 'Ideation Portal - Register' });
+});
+
+router.get('/login', function(req, res) {
+  res.render('login', { title: 'Ideation Portal - Login' });
+});*/
 
 module.exports = router;
