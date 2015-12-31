@@ -61,6 +61,7 @@ app.use('/api', expressJwt({ secret: config.secret })
       '/api/users/authenticate'
       , '/api/users/register'
       , '/api/users/'
+      , '/api/users/current'
     ] 
   }));
 

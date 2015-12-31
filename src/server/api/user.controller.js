@@ -16,11 +16,13 @@ module.exports = router;
 
 function authenticateUser(req, res) {
     userService.authenticate(req.body.username, req.body.password)
-        .then(function (token) {
-            if (token) {
+        .then(function (handle) {
+            if (handle) {
                 // authentication successful
-                console.log(req.body.username +"-"+req.body.password)
-                res.send({ token: token });
+				console.log("authentication successful");
+                console.log(req.body.username +"-"+req.body.password);
+				console.log(handle);
+                res.send(handle);
             } else {
                 // authentication failed
                 res.sendStatus(401);
@@ -77,7 +79,8 @@ function getUser(req, res) {
 }
 
 function getCurrentUser(req, res) {
-    userService.getById(req.user.sub)
+	console.log(req.session.userId);
+    userService.getById(req.session.userId)
         .then(function (user) {
             if (user) {
                 res.send(user);

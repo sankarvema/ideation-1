@@ -30,8 +30,13 @@ function authenticate(username, password) {
         if (err) deferred.reject(err);
 
         if (user && bcrypt.compareSync(password, user.pwdHash)) {
+            sessionHandle = {
+                token: jwt.sign({ sub: user._id }, config.secret),
+                userId : user._id
+            }
+            console.log(sessionHandle);
             // authentication successful
-            deferred.resolve(jwt.sign({ sub: user._id }, config.secret));
+            deferred.resolve(sessionHandle);
         } else {
             // authentication failed
             deferred.resolve();
