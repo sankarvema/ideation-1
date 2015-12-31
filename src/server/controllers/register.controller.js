@@ -22,9 +22,9 @@ router.post('/', function (req, res) {
         if (response.statusCode !== 200) {
             return res.render('register', {
                 error: response.body,
-                firstName: req.body.firstName,
-                lastName: req.body.lastName,
-                username: req.body.username
+                firstname: req.body.firstname,
+                lastname: req.body.lastname,
+                handle: req.body.handle
             });
         }
 

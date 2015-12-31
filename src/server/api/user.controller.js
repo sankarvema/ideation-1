@@ -1,9 +1,11 @@
 var config = require('../../config.json');
 var express = require('express');
 var router = express.Router();
-var userService = require('../services/user.service');
+var userService = require('../models/services/userService');
 
 // routes
+router.get('/', getUsers);
+router.get('/:_id', getCurrentUser);
 router.post('/authenticate', authenticateUser);
 router.post('/register', registerUser);
 router.get('/current', getCurrentUser);
@@ -17,6 +19,7 @@ function authenticateUser(req, res) {
         .then(function (token) {
             if (token) {
                 // authentication successful
+                console.log(req.body.username +"-"+req.body.password)
                 res.send({ token: token });
             } else {
                 // authentication failed
@@ -28,10 +31,45 @@ function authenticateUser(req, res) {
         });
 }
 
+function getUsers(req,res){
+    userService.getAll()
+        .then(function(userList){
+/*            if (userList){
+                console.log(userList);
+                res.send(userList);
+            }else {
+                res.sendStatus(404);
+            }*/
+                            console.log("sending: "+userList);
+                res.send(userList);
+
+        })
+        .catch(function (err){
+            console.log("exception" + err);
+            res.status(400).send(err);
+        })
+
+}
+
 function registerUser(req, res) {
     userService.create(req.body)
         .then(function () {
             res.sendStatus(200);
+        })
+        .catch(function (err) {
+            console.log(err);
+            res.status(400).send(err);
+        });
+}
+
+function getUser(req, res) {
+    userService.getById(req.params._id)
+        .then(function (user) {
+            if (user) {
+                res.send(user);
+            } else {
+                res.sendStatus(404);
+            }
         })
         .catch(function (err) {
             res.status(400).send(err);

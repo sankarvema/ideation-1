@@ -8,7 +8,7 @@ angular.module('myapp.admin')
     $scope.action = "none";
 
     var refresh = function() {
-      $http.get('/userApi').success(function(response) {
+      $http.get('/api/users/').success(function(response) {
         console.log("I got the data I requested");
         $scope.userlist = response;
         $scope.user = "";
@@ -37,7 +37,7 @@ angular.module('myapp.admin')
 
     $scope.addUser = function() {
       console.log($scope.user);
-      $http.post('/userApi', $scope.user).success(function(response) {
+      $http.post('/api/users/register', $scope.user).success(function(response) {
         console.log(response);
         refresh();
         $scope.action = "none";
@@ -47,7 +47,7 @@ angular.module('myapp.admin')
 
     $scope.remove = function(id) {
       console.log(id);
-      $http.delete('/userApi/' + id).success(function(response) {
+      $http.delete('/api/users/' + id).success(function(response) {
         refresh();
         growl.info(parse("User with %s deleted successfully", "slkfd"));
       });
@@ -55,7 +55,7 @@ angular.module('myapp.admin')
 
     $scope.edit = function(id) {
       console.log(id);
-      $http.get('/userApi/' + id).success(function(response) {
+      $http.get('/api/users/' + id).success(function(response) {
         $scope.user = response;
         $scope.hideAddRow = false;
         $scope.action = "edit";
@@ -64,7 +64,7 @@ angular.module('myapp.admin')
 
     $scope.update = function() {
       console.log($scope.user._id);
-      $http.put('/userApi/' + $scope.user._id, $scope.user).success(function(response) {
+      $http.put('/api/users/' + $scope.user._id, $scope.user).success(function(response) {
         refresh();
         $scope.action = "none";
         $scope.hideAddRow = true;

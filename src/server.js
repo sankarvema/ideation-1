@@ -55,7 +55,14 @@ app.use('/node_modules', express.static(__dirname + '/node_modules'));
 app.use(session({ secret: config.secret, resave: false, saveUninitialized: true }));
 
 // use JWT auth to secure the api
-app.use('/api', expressJwt({ secret: config.secret }).unless({ path: ['/api/users/authenticate', '/api/users/register'] }));
+app.use('/api', expressJwt({ secret: config.secret })
+  .unless({ 
+    path: [
+      '/api/users/authenticate'
+      , '/api/users/register'
+      , '/api/users/'
+    ] 
+  }));
 
 
 app.use('/', routes);
@@ -69,8 +76,8 @@ app.use('/loginApi', loginApi);*/
 app.use('/login', require('./server/controllers/login.controller'));
 app.use('/register', require('./server/controllers/register.controller'));
 app.use('/app', require('./server/controllers/app.controller'));
+//app.use('/api/users', require('./user/userRouter'));
 app.use('/api/users', require('./server/api/user.controller'));
-
 //app.use('/dashboard', express.static('public/app/dashboard'));
 
 var path = require("path"); 
